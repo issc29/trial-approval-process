@@ -143,7 +143,7 @@ function isApprovedUser(userTriggered, approvedUsers) {
 
 function getBodyText(companyName, pocLink, githubOrgs, author, approvedUser, repoLink, type) {
   const typeText = getTypeText(type)
-  dedent `
+  return dedent `
   **Item** | **Description**
   :--: | :--
   **Client/Prospect** | ${companyName} :  [POC SFDC Link](${pocLink}) 
