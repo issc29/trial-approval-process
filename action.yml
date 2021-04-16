@@ -1,0 +1,15 @@
+name: 'Early Access POC Action'
+description: 'Creates a process around to enable early-access programs for trials'
+inputs:
+  github-token:  # id of input
+    description: 'Token to use'
+    required: true
+  opsRepoId:
+    description: 'Repo ID for Ops repo to open issues on'
+    required: true
+  approvedUsers:
+    description: 'Comma separated list of users that can approve'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
