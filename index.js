@@ -6,6 +6,7 @@ const myToken = core.getInput('github-token');
 const octokit = github.getOctokit(myToken)
 const payload = github.context.payload
 const issueNodeID = payload.client_payload.command.resource.id
+const pocApprove = payload.client_payload.data['Approve POC']
 
 const functionsLib = require('actions-api-functions');
 var functions = new functionsLib(octokit, core)
