@@ -42,13 +42,15 @@ async function run() {
 
     const repoLink = getRepoLink(orgname, reponame, issueNumber)
     const body = getBodyText(companyName, pocObjectLink, githubOrgs, author, userTriggered, repoLink, type)
+    console.log(body)
     const title = getTitleText(companyName)
 
+    console.log("Creating Issue in Ops Repo")
     const createdIssueInfo = await functions.createIssue(opsRepoID, body, title)
     const opsIssueRepoName = createdIssueInfo.createIssue.issue.repository.nameWithOwner
     const opsIssueNumber = createdIssueInfo.createIssue.issue.number
 
-
+    console.log("Commenting on Existing Issue")
     await commentOnExistingTrialIssue(issueNodeID, userTriggered, opsIssueRepoName, opsIssueNumber)    
      
   } catch (error) {
