@@ -234,7 +234,10 @@ module.exports = class functions {
         issue{
           id,
           number,
-          title
+          title,
+          repository{
+            nameWithOwner
+          }
         }
       }
     }`;
