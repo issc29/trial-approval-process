@@ -47,6 +47,7 @@ async function run() {
 
     console.log("Creating Issue in Ops Repo")
     const createdIssueInfo = await functions.createIssue(opsRepoID, body, title)
+    console.log(createdIssueInfo)
     const opsIssueRepoName = createdIssueInfo.createIssue.issue.repository.nameWithOwner
     const opsIssueNumber = createdIssueInfo.createIssue.issue.number
 
