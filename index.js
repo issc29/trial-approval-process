@@ -42,12 +42,12 @@ async function run() {
 
     const repoLink = getRepoLink(orgname, reponame, issueNumber)
     const body = getBodyText(companyName, pocObjectLink, githubOrgs, author, userTriggered, repoLink, type)
-    console.log(body)
+    // console.log(body)
     const title = getTitleText(companyName)
 
     console.log("Creating Issue in Ops Repo")
     const createdIssueInfo = await functions.createIssue(opsRepoID, body, title)
-    //console.log(createdIssueInfo)
+    // console.log(createdIssueInfo)
     const opsIssueRepoName = createdIssueInfo.createIssue.issue.repository.nameWithOwner
     const opsIssueNumber = createdIssueInfo.createIssue.issue.number
 
@@ -62,7 +62,7 @@ async function run() {
 
 function checkIfPocApproved(pocApprove, userTriggered){
   if(pocApprove != "Yes") {
-    throw new Error(`:wave: GHAS POC has been denied by \`@${userTriggered}\`!`)
+    throw new Error(`:wave: Trial has been denied by \`@${userTriggered}\`!`)
   }
 }
 
@@ -78,7 +78,7 @@ function getType(labels){
   }
 
   if(!type) {
-    throw new Error(':wave: GHAS POC Error: Could not detect the POC Type!')
+    throw new Error(':wave: Trial Error: Could not detect the Trial Type!')
   }
 
   return type
@@ -91,7 +91,7 @@ function getPOCObjectLink(body) {
     pocLink = body.match(/.*(https:\/\/github\.lightning\.force\.com.*Proof_of_Concept.*view).*/)[1]
     return pocLink
   } catch (e) {
-    throw new Error(':wave: GHAS POC Error: Could not detect the SFDC POC Link!')
+    throw new Error(':wave: Trial Error: Could not detect the SFDC POC Link!')
   }
 }
 
@@ -101,7 +101,7 @@ function getGitHubOrgs(body){
     var githubOrg = body.match(/.*GitHub Organization\(s\)\*\* -(.*)/)[1].trim()
     return githubOrg
   }
-  throw new Error(':wave: GHAS POC Error: Could not detect POC Organization to enable!')
+  throw new Error(':wave: Trial Error: Could not detect POC Organization to enable!')
 }
 
 function getCompanyName(title) {
@@ -109,20 +109,14 @@ function getCompanyName(title) {
     var companyName = title.match(/\[GHAS .* Trial\]:(.*),.*/)[1]
     return companyName
    } catch (e) {
-    throw new Error(':wave: GHAS POC Error: Could not detect the Company Name!')
+    throw new Error(':wave: Trial Error: Could not detect the Company Name!')
    }
-}
-
-
-function getCurrentIssueComment(payloadData, feedback){
-  return dedent`${payloadData['Early Access Name']} Early Access has been approved for this account. Product has been notified to turn on this Early Access.
-  Please add to any feedback to ${feedback} during the Early Access.`
 }
 
 
 function failIfNotApprovedUser(userTriggered, approvedUsers){
   if(!isApprovedUser(userTriggered, approvedUsers)) {
-    throw new Error('Not an approver!')
+    throw new Error(':wave: Trial Error: Not an approver!')
   }
 }
 
