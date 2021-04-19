@@ -41,7 +41,8 @@ async function run() {
     const companyName = getCompanyName(currentIssueTitle)
 
     const repoLink = getRepoLink(orgname, reponame, issueNumber)
-    const body = getBodyText(companyName, pocObjectLink, githubOrgs, author, userTriggered, repoLink, type)
+    const metadataInfo = { issueNodeID: issueNodeID }
+    const body = getBodyText(companyName, pocObjectLink, githubOrgs, author, userTriggered, repoLink, type, metadataInfo)
     // console.log(body)
     const title = getTitleText(companyName)
 
@@ -136,7 +137,7 @@ function isApprovedUser(userTriggered, approvedUsers) {
   return false
 }
 
-function getBodyText(companyName, pocLink, githubOrgs, author, approvedUser, repoLink, type) {
+function getBodyText(companyName, pocLink, githubOrgs, author, approvedUser, repoLink, type, metadataInfo) {
   const typeText = getTypeText(type)
   return dedent `
   **Item** | **Description**
@@ -157,6 +158,7 @@ function getBodyText(companyName, pocLink, githubOrgs, author, approvedUser, rep
   
   ---
   **Mention:** _@github/sales-support_ _@github/revenue_ (for 👀 and 👍 on all day 46-90 requests)
+  <!-- METADATA: ${JSON.stringify(metadataInfo)} -->
   `
 
 }
