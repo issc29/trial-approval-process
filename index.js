@@ -9,7 +9,7 @@ run();
 
 async function run() {
   const opsIssueProcess = new opsIssueFunctions(github, core)
-  if(runOpsProcess) {
+  if(runOpsProcess == 'true') {
     await opsIssueProcess.runOpsProcess(github, core)
   } else {
     await trialIssueProcess.runTrialIssueProcess(github, core)
