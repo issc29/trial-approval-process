@@ -21,14 +21,14 @@ module.exports = class functions {
       // Get Issue Info
       console.log("Getting Issue Info")
       const opsIssueInfo = await this.functions.getIssueInfoFromNodeID(this.opsIssueNodeID)
-      const opsMetadataInfo = getIssueMetadataObject(opsIssueInfo.body)
+      const opsMetadataInfo = this.getIssueMetadataObject(opsIssueInfo.body)
       const trialIssueNodeID = opsMetadataInfo["issueNodeID"]
-      const trialIssueInfo = await getTrialIssueInfo(trialIssueNodeID)
+      const trialIssueInfo = await this.getTrialIssueInfo(trialIssueNodeID)
       const trialProjectInfo = await functions.getProjectInfoFromNodeID(trialIssueNodeID)
       const trialProjectCardNodes = trialProjectInfo.issue.projectCards.nodes
       
       // Get Project cards associated with GHAS POC Issue
-      var cardId = getProjectCard(trialProjectCardNodes)
+      var cardId = this.getProjectCard(trialProjectCardNodes)
 
       // Change column to In Progress
       console.log("Changing column of POC Trial Issue to In Progress")
@@ -40,8 +40,8 @@ module.exports = class functions {
   
       // Update the GHAS POC Issue body to include updated expiration
       console.log("Updating on POC Trial Issue with new Metadata")
-      const expireDate = getExpireDate(this.numOfPOCDays)
-      var updatedBody = getUpdateMetadataBody(trialIssueInfo.body, expireDate)
+      const expireDate = this.getExpireDate(this.numOfPOCDays)
+      var updatedBody = this.getUpdateMetadataBody(trialIssueInfo.body, expireDate)
       await this.functions.updateIssueBody(trialIssueNodeID, updatedBody)
 
       // Comment and close Sales Ops ISsue
