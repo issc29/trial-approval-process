@@ -114,7 +114,7 @@ module.exports = class functions {
 
 
   failIfNotApprovedUser(userTriggered, approvedUsers){
-    if(!isApprovedUser(userTriggered, approvedUsers)) {
+    if(!this.isApprovedUser(userTriggered, approvedUsers)) {
       throw new Error(':wave: Trial Error: Not an approver!')
     }
   }
@@ -136,7 +136,7 @@ module.exports = class functions {
   }
 
   getBodyText(companyName, pocLink, githubOrgs, author, approvedUser, repoLink, type, metadataInfo) {
-    const typeText = getTypeText(type)
+    const typeText = this.getTypeText(type)
     return dedent `
     **Item** | **Description**
     :--: | :--
@@ -182,7 +182,7 @@ module.exports = class functions {
   }
 
   async commentOnExistingTrialIssue(issueNodeID, userTriggered, nameWithOwner, opsIssueNumber) {
-    const existingTrialComment = getExistingTrialComment(userTriggered, nameWithOwner, opsIssueNumber)
+    const existingTrialComment = this.getExistingTrialComment(userTriggered, nameWithOwner, opsIssueNumber)
     await this.functions.commentOnIssue(issueNodeID, existingTrialComment)
 
   }
