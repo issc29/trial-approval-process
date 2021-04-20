@@ -3,13 +3,13 @@ module.exports = class functions {
     this.github = github;
     this.core = core;
     var myToken = core.getInput('github-token');
-    this.octokit = github.getOctokit(myToken)
+    var octokit = github.getOctokit(myToken)
+    var payload = github.context.payload
     var functionsLib = require('actions-api-functions');
+
     this.functions = new functionsLib(octokit, core)
-    this.payload = github.context.payload
     this.opsIssueNodeID = payload.client_payload.command.resource.id
     this.numOfPOCDays = payload.client_payload.data['POC Days']
-    
     this.inProgressColumnID = core.getInput('inProgressColumnID');
     
 
