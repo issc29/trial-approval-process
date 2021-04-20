@@ -10,7 +10,7 @@ module.exports = class functions {
     var functionsLib = require('actions-api-functions');
 
     this.functions = new functionsLib(octokit, core)
-    this.issueNodeID = payload.client_payload.command.resource.id
+    this.trialIssueNodeID = payload.client_payload.command.resource.id
     this.pocApprove = payload.client_payload.data['Approve POC']
     this.userTriggered = payload.client_payload.command.user.login
     this.approvedUsers = core.getInput('approvedUsers')
@@ -39,7 +39,7 @@ module.exports = class functions {
       const companyName = this.getCompanyName(currentIssueTitle)
 
       const repoLink = this.getRepoLink(orgname, reponame, issueNumber)
-      const metadataInfo = { issueNodeID: this.issueNodeID }
+      const metadataInfo = { issueNodeID: this.trialIssueNodeID }
       const body = this.getBodyText(companyName, pocObjectLink, githubOrgs, author, this.userTriggered, repoLink, type, metadataInfo)
       // console.log(body)
       const title = this.getTitleText(companyName)
@@ -51,9 +51,9 @@ module.exports = class functions {
       const opsIssueNumber = createdIssueInfo.createIssue.issue.number
 
       console.log("Commenting on Existing Issue")
-      await this.commentOnExistingTrialIssue(this.issueNodeID, this.userTriggered, opsIssueRepoName, opsIssueNumber)
+      await this.commentOnExistingTrialIssue(this.trialIssueNodeID, this.userTriggered, opsIssueRepoName, opsIssueNumber)
     } catch (error) {
-      await this.functions.commentOnIssue(this.opsIssueNodeID, error.message)
+      await this.functions.commentOnIssue(this.trialIssueNodeID, error.message)
       this.core.setFailed(error.message);
     }
   }
