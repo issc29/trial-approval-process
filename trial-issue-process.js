@@ -48,7 +48,7 @@ async function runTrialIssueProcess(github, core) {
 
     console.log("Commenting on Existing Issue")
     await commentOnExistingTrialIssue(issueNodeID, userTriggered, opsIssueRepoName, opsIssueNumber)
-  } catch (e) {
+  } catch (error) {
     await functions.commentOnIssue(opsIssueNodeID, error.message)
     core.setFailed(error.message);
   }

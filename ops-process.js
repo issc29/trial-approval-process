@@ -46,7 +46,7 @@ async function runOpsProcess(github, core) {
     await functions.commentOnIssue(opsIssueNodeID, `POC has been enabled for ${numOfPOCDays} days!`)
     await functions.updateIssueState(opsIssueNodeID, "CLOSED")
 
-  } catch (e) {
+  } catch (error) {
     await functions.commentOnIssue(opsIssueNodeID, error.message)
     core.setFailed(error.message);
   }
