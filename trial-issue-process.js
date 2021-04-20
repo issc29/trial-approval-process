@@ -67,7 +67,7 @@ module.exports = class functions {
 
   getType(labels){
     var type = ''
-    for(label of labels) {
+    for(const label of labels) {
       if(label.name == 'ghec') {
         type = "Cloud"
       }
@@ -125,7 +125,7 @@ module.exports = class functions {
       return item.trim();
     });
 
-    for (user of approvedUsersList){
+    for (const user of approvedUsersList){
       if (user == userTriggered) {
         //console.log(`${user} : ${userTriggered}`)
         return true
