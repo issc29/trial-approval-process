@@ -2,9 +2,9 @@ module.exports = class functions {
   constructor(github, core) {
     this.github = github;
     this.core = core;
-    myToken = core.getInput('github-token');
+    var myToken = core.getInput('github-token');
     this.octokit = github.getOctokit(myToken)
-    functionsLib = require('actions-api-functions');
+    var functionsLib = require('actions-api-functions');
     this.functions = new functionsLib(octokit, core)
     this.payload = github.context.payload
     this.opsIssueNodeID = payload.client_payload.command.resource.id
