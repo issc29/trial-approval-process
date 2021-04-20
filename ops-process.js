@@ -27,7 +27,7 @@ module.exports = class functions {
       const trialIssueInfo = await this.getTrialIssueInfo(trialIssueNodeID)
       const trialProjectInfo = await this.functions.getProjectInfoFromNodeID(trialIssueNodeID)
       console.log(trialProjectInfo)
-      const trialProjectCardNodes = trialProjectInfo.issue.projectCards.nodes
+      const trialProjectCardNodes = trialProjectInfo.projectCards.nodes
       
       // Get Project cards associated with GHAS POC Issue
       var cardId = this.getProjectCard(trialProjectCardNodes)
@@ -46,7 +46,7 @@ module.exports = class functions {
       var updatedBody = this.getUpdateMetadataBody(trialIssueInfo.body, expireDate)
       await this.functions.updateIssueBody(trialIssueNodeID, updatedBody)
 
-      // Comment and close Sales Ops ISsue
+      // Comment and close Sales Ops Issue
       console.log("Commenting and closing sales-ops issue")
       await this.functions.commentOnIssue(this.opsIssueNodeID, `POC has been enabled for ${this.numOfPOCDays} days!`)
       await this.functions.updateIssueState(this.opsIssueNodeID, "CLOSED")
