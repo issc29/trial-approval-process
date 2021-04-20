@@ -347,7 +347,7 @@ module.exports = class functions {
   }`;
 
     const variables = {
-      issueId: issueID,
+      issueID: issueID,
       state: state,
     }
     const result = await this.octokit.graphql(UpdateIssueStateMutation, variables)
