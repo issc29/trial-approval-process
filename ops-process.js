@@ -24,7 +24,7 @@ module.exports = class functions {
       const opsMetadataInfo = this.getIssueMetadataObject(opsIssueInfo.body)
       const trialIssueNodeID = opsMetadataInfo["issueNodeID"]
       const trialIssueInfo = await this.getTrialIssueInfo(trialIssueNodeID)
-      const trialProjectInfo = await functions.getProjectInfoFromNodeID(trialIssueNodeID)
+      const trialProjectInfo = await this.functions.getProjectInfoFromNodeID(trialIssueNodeID)
       const trialProjectCardNodes = trialProjectInfo.issue.projectCards.nodes
       
       // Get Project cards associated with GHAS POC Issue
