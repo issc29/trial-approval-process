@@ -51,7 +51,7 @@ module.exports = class functions {
 
     } catch (error) {
       await this.functions.commentOnIssue(this.opsIssueNodeID, error.message)
-      core.setFailed(error.message);
+      this.core.setFailed(error.message);
     }
   }
 
