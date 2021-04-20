@@ -20,7 +20,7 @@ module.exports = class functions {
   async runTrialIssueProcess() {
     try {
       this.failIfNotApprovedUser(this.userTriggered, this.approvedUsers)
-      const issueInfo = await this.functions.getIssueInfoFromNodeID(issueNodeID)
+      const issueInfo = await this.functions.getIssueInfoFromNodeID(trialIssueNodeID)
 
       const reponame = issueInfo.repository.name
       const repoId = issueInfo.repository.id
