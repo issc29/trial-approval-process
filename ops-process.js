@@ -7,6 +7,7 @@ module.exports = class functions {
     var payload = github.context.payload
     var functionsLib = require('actions-api-functions');
 
+    this.pocProject = core.getInput('pocProjectID');
     this.functions = new functionsLib(octokit, core)
     this.opsIssueNodeID = payload.client_payload.command.resource.id
     this.numOfPOCDays = payload.client_payload.data['POC Days']
@@ -84,7 +85,7 @@ module.exports = class functions {
     var cardId = ''
     for (const projectCard of trialProjectCardNodes) {
       console.log(projectCard)
-      if(projectCard.project.id == pocProject) {
+      if(projectCard.project.id == this.pocProject) {
         cardId = projectCard.id
       }
     }

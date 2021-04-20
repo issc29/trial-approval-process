@@ -10,6 +10,8 @@ inputs:
     description: '[Trial Repo] Comma separated list of users that can approve'
   inProgressColumnID:
     description: '[Ops Repo] Repo ID for Ops repo to open issues on'
+  pocProjectID:
+    descrption: '[Ops Repo] Trial POC Project ID'
   ops:
     description: Does this run in ops repo or trial repo? True | False
     default: false
