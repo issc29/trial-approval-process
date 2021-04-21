@@ -5,8 +5,8 @@ module.exports = class functions {
   }
 
   async commentOnIssue(issueID, comment) {
-    const addCommentMutation = `mutation addComment($issueId: ID!, $commentBody: String!){ 
-      addComment(input:{subjectId: $issueId , body: $commentBody}) {
+    const addCommentMutation = `mutation addComment($issueID: ID!, $commentBody: String!){ 
+      addComment(input:{subjectId: $issueID , body: $commentBody}) {
         commentEdge {
           node {
             id
@@ -16,7 +16,7 @@ module.exports = class functions {
       }`;
 
     const variables = {
-      issueId: issueID,
+      issueID: issueID,
       commentBody: comment,
     }
     const result = await this.octokit.graphql(addCommentMutation, variables)
@@ -29,8 +29,8 @@ module.exports = class functions {
 
 
   async getIssueInfo(issueID) {
-    const getIssueInfoQuery = `query($issueId: ID!) { 
-      node(id:$issueId) {
+    const getIssueInfoQuery = `query($issueID: ID!) { 
+      node(id:$issueID) {
         ... on Issue {
           title,
           number
@@ -39,7 +39,7 @@ module.exports = class functions {
     }`;
 
     const variables = {
-      issueId: issueID
+      issueID: issueID
     }
     const result = await this.octokit.graphql(getIssueInfoQuery, variables)
     if (!result) {
@@ -122,8 +122,8 @@ module.exports = class functions {
   }
 
   async addLabelToIssue(issueID, labelID) {
-    const addLabelMutation = `mutation addLabel($issueId: ID!, $labelId: [ID!]!){ 
-      addLabelsToLabelable(input:{labelIds:$labelId, labelableId:$issueId}){
+    const addLabelMutation = `mutation addLabel($issueID: ID!, $labelId: [ID!]!){ 
+      addLabelsToLabelable(input:{labelIds:$labelId, labelableId:$issueID}){
         labelable {
           ... on Issue {
             id
@@ -133,7 +133,7 @@ module.exports = class functions {
     }`;
 
     const variables = {
-      issueId: issueID,
+      issueID: issueID,
       labelId: labelID
     }
     const result = await this.octokit.graphql(addLabelMutation, variables)
@@ -147,8 +147,8 @@ module.exports = class functions {
   }
 
   async removeLabelFromIssue(issueID, labelID) {
-    const removeLabelMutation = `mutation removeLabel($issueId: ID!, $labelId: [ID!]!){ 
-      removeLabelsFromLabelable(input:{labelIds:$labelId, labelableId:$issueId}){
+    const removeLabelMutation = `mutation removeLabel($issueID: ID!, $labelId: [ID!]!){ 
+      removeLabelsFromLabelable(input:{labelIds:$labelId, labelableId:$issueID}){
         labelable {
           ... on Issue {
             id
@@ -158,7 +158,7 @@ module.exports = class functions {
     }`;
 
     const variables = {
-      issueId: issueID,
+      issueID: issueID,
       labelId: labelID
     }
     const result = await this.octokit.graphql(removeLabelMutation, variables)
@@ -324,7 +324,7 @@ module.exports = class functions {
   }`;
 
     const variables = {
-      issueId: issueID,
+      issueID: issueID,
       body: comment,
     }
     const result = await this.octokit.graphql(UpdateIssueBodyMutation, variables)
