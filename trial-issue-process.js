@@ -39,8 +39,8 @@ module.exports = class functions {
       const companyName = this.functions.getCompanyName(currentIssueTitle)
 
       const repoLink = this.getRepoLink(orgname, reponame, issueNumber)
-      const metadataInfo = { issueNodeID: this.trialIssueNodeID }
-      const body = this.getBodyText(companyName, pocObjectLink, githubOrgs, author, this.userTriggered, repoLink, type, metadataInfo)
+      const opsIssueMetadataInfo = { trialIssueNodeID: this.trialIssueNodeID }
+      const body = this.getBodyText(companyName, pocObjectLink, githubOrgs, author, this.userTriggered, repoLink, type, opsIssueMetadataInfo)
       // console.log(body)
       const title = this.getTitleText(companyName)
 
@@ -52,10 +52,30 @@ module.exports = class functions {
 
       console.log("Commenting on Existing Issue")
       await this.commentOnExistingTrialIssue(this.trialIssueNodeID, this.userTriggered, opsIssueRepoName, opsIssueNumber)
+      
+      console.log("Updating Existing Issue Metadata")
+      var updatedBody = this.getUpdateMetadataBody(issueInfo.body, this.opsRepoID)
+      await this.functions.updateIssueBody(trialIssueNodeID, updatedBody)
+
     } catch (error) {
       await this.functions.commentOnIssue(this.trialIssueNodeID, error.message)
       this.core.setFailed(error.message);
     }
+  }
+
+  getUpdateMetadataBody(body, opsIssueNodeID) {
+    var updatedBody = body
+    var metadataObject = this.functions.getMetadataObjectFromBody(body)
+    if(!Object.keys(metadataObject).length === 0) {
+      metadataObject["opsIssueNodeID"] = opsIssueNodeID
+      const metadataBody = `<!-- METADATA: ${JSON.stringify(metadataObject)} -->`
+      updatedBody = body.replace(/<!-- METADATA:.*?({.*}).*-->/gm, metadataBody)
+    } else {
+      const metadataBody = {}
+      metadataBody["opsIssueNodeID"] = opsIssueNodeID
+      updatedBody = body + `\r\n\r\n<!-- METADATA: ${JSON.stringify(metadataBody)} -->`
+    }
+    return updatedBody
   }
 
   failIfNotApprovedUser(userTriggered, approvedUsers){

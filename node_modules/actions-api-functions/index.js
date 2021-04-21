@@ -426,4 +426,13 @@ module.exports = class functions {
       throw new Error(':wave: Trial Error: Could not detect the Company Name!')
     }
   }
+
+  getMetadataObjectFromBody(body) {
+    try{
+      const metadataInfo = JSON.parse(body.match(/<!-- METADATA:.*?({.*}).*-->/)[1])
+      return metadataInfo
+    } catch(error) {
+      return {}
+    }
+  }
 }

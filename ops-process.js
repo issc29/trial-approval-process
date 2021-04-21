@@ -23,7 +23,7 @@ module.exports = class functions {
       console.log("Getting Issue Info")
       const opsIssueInfo = await this.functions.getIssueInfoFromNodeID(this.opsIssueNodeID)
       const opsMetadataInfo = this.getIssueMetadataObject(opsIssueInfo.body)
-      const trialIssueNodeID = opsMetadataInfo["issueNodeID"]
+      const trialIssueNodeID = opsMetadataInfo["trialIssueNodeID"]
       const trialIssueInfo = await this.getTrialIssueInfo(trialIssueNodeID)
       const trialProjectInfo = await this.functions.getProjectInfoFromNodeID(trialIssueNodeID)
       const trialProjectCardNodes = trialProjectInfo.projectCards.nodes
@@ -59,10 +59,10 @@ module.exports = class functions {
 
   getUpdateMetadataBody(body, expireDate) {
     var updatedBody = body
-    if(body.match(/<!-- METADATA:.*?({.*}).*-->/)) {
-      const metadataInfo = JSON.parse(body.match(/<!-- METADATA:.*?({.*}).*-->/)[1])
-      metadataInfo["END"] = expireDate
-      const metadataBody = `<!-- METADATA: ${JSON.stringify(metadataInfo)} -->`
+    var metadataObject = this.functions.getMetadataObjectFromBody(body)
+    if(!Object.keys(metadataObject).length === 0) {
+      metadataObject["END"] = expireDate
+      const metadataBody = `<!-- METADATA: ${JSON.stringify(metadataObject)} -->`
       updatedBody = body.replace(/<!-- METADATA:.*?({.*}).*-->/gm, metadataBody)
     } else {
       const metadataBody = {}
