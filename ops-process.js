@@ -37,7 +37,7 @@ module.exports = class functions {
 
       // Comment on POC Trial issue
       console.log("Commenting on POC Trial Issue")
-      await this.functions.commentOnIssue(trialIssueNodeID, `Trial has been enabled for ${this.numOfPOCDays} days!`)
+      await this.functions.commentOnIssue(trialIssueNodeID, `Trial has been enabled for ${this.numOfPOCDays} days! For extensions or any other enablement requests, see the sales-operations issue. `)
   
       // Update the GHAS POC Issue body to include updated expiration
       console.log("Updating on POC Trial Issue with new Metadata")
