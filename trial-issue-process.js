@@ -11,7 +11,7 @@ module.exports = class functions {
 
     this.functions = new functionsLib(octokit, core)
     this.trialIssueNodeID = payload.client_payload.command.resource.id
-    this.pocApprove = payload.client_payload.data['Approve POC']
+    this.pocApprove = payload.client_payload.data['Approve Trial']
     this.userTriggered = payload.client_payload.command.user.login
     this.approvedUsers = core.getInput('approvedUsers')
     this.opsRepoID = core.getInput("opsRepoId")
