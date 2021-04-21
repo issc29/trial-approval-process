@@ -31,12 +31,12 @@ module.exports = class functions {
       const currentIssueBody = issueInfo.body
       const labels = issueInfo.labels.nodes
 
-      this.checkIfPocApproved(this.pocApprove, this.userTriggered)
+      this.functions.checkIfPocApproved(this.pocApprove, this.userTriggered)
 
-      const type = this.getType(labels)
-      const pocObjectLink = this.getPOCObjectLink(currentIssueBody)
-      const githubOrgs = this.getGitHubOrgs(currentIssueBody)
-      const companyName = this.getCompanyName(currentIssueTitle)
+      const type = this.functions.getType(labels)
+      const pocObjectLink = this.functions.getPOCObjectLink(currentIssueBody)
+      const githubOrgs = this.functions.getGitHubOrgs(currentIssueBody)
+      const companyName = this.functions.getCompanyName(currentIssueTitle)
 
       const repoLink = this.getRepoLink(orgname, reponame, issueNumber)
       const metadataInfo = { issueNodeID: this.trialIssueNodeID }
@@ -57,61 +57,6 @@ module.exports = class functions {
       this.core.setFailed(error.message);
     }
   }
-
-
-  checkIfPocApproved(pocApprove, userTriggered){
-    if(pocApprove != "Yes") {
-      throw new Error(`:wave: Trial has been denied by \`@${userTriggered}\`!`)
-    }
-  }
-
-  getType(labels){
-    var type = ''
-    for(const label of labels) {
-      if(label.name == 'ghec') {
-        type = "Cloud"
-      }
-      if(label.name == 'ghes') {
-        type = "Server"
-      }
-    }
-
-    if(!type) {
-      throw new Error(':wave: Trial Error: Could not detect the Trial Type!')
-    }
-
-    return type
-  }
-
-  getPOCObjectLink(body) {
-    
-    try { 
-      var pocLink = ''
-      pocLink = body.match(/.*(https:\/\/github\.lightning\.force\.com.*Proof_of_Concept.*view).*/)[1]
-      return pocLink
-    } catch (e) {
-      throw new Error(':wave: Trial Error: Could not detect the SFDC POC Link!')
-    }
-  }
-
-  getGitHubOrgs(body){
-    const reGitHubOrg = /.*GitHub Organization\(s\)\*\* -(.*)/
-    if(reGitHubOrg.test(body)) {
-      var githubOrg = body.match(/.*GitHub Organization\(s\)\*\* -(.*)/)[1].trim()
-      return githubOrg
-    }
-    throw new Error(':wave: Trial Error: Could not detect POC Organization to enable!')
-  }
-
-  getCompanyName(title) {
-    try {
-      var companyName = title.match(/\[GHAS .* Trial\]:(.*),.*/)[1]
-      return companyName
-    } catch (e) {
-      throw new Error(':wave: Trial Error: Could not detect the Company Name!')
-    }
-  }
-
 
   failIfNotApprovedUser(userTriggered, approvedUsers){
     if(!this.isApprovedUser(userTriggered, approvedUsers)) {
