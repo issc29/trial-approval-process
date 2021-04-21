@@ -60,7 +60,7 @@ module.exports = class functions {
   getUpdateMetadataBody(body, expireDate) {
     var updatedBody = body
     var metadataObject = this.functions.getMetadataObjectFromBody(body)
-    if(!Object.keys(metadataObject).length === 0) {
+    if(Object.keys(metadataObject).length !== 0) {
       metadataObject["END"] = expireDate
       const metadataBody = `<!-- METADATA: ${JSON.stringify(metadataObject)} -->`
       updatedBody = body.replace(/<!-- METADATA:.*?({.*}).*-->/gm, metadataBody)

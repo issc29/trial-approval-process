@@ -66,7 +66,7 @@ module.exports = class functions {
   getUpdateMetadataBody(body, opsIssueNodeID) {
     var updatedBody = body
     var metadataObject = this.functions.getMetadataObjectFromBody(body)
-    if(!Object.keys(metadataObject).length === 0) {
+    if(Object.keys(metadataObject).length !== 0) {
       metadataObject["opsIssueNodeID"] = opsIssueNodeID
       const metadataBody = `<!-- METADATA: ${JSON.stringify(metadataObject)} -->`
       updatedBody = body.replace(/<!-- METADATA:.*?({.*}).*-->/gm, metadataBody)
