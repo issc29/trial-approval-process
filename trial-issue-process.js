@@ -55,7 +55,7 @@ module.exports = class functions {
       
       console.log("Updating Existing Issue Metadata")
       var updatedBody = this.getUpdateMetadataBody(issueInfo.body, this.opsRepoID)
-      await this.functions.updateIssueBody(trialIssueNodeID, updatedBody)
+      await this.functions.updateIssueBody(this.trialIssueNodeID, updatedBody)
 
     } catch (error) {
       await this.functions.commentOnIssue(this.trialIssueNodeID, error.message)
