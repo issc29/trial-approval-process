@@ -10,7 +10,7 @@ module.exports = class functions {
     this.pocProject = core.getInput('pocProjectID');
     this.functions = new functionsLib(octokit, core)
     this.opsIssueNodeID = payload.client_payload.command.resource.id
-    this.numOfPOCDays = payload.client_payload.data['POC Days']
+    this.numOfPOCDays = payload.client_payload.data['Trial Days']
     this.inProgressColumnID = core.getInput('inProgressColumnID');
     
 
