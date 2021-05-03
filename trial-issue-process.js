@@ -80,24 +80,24 @@ module.exports = class functions {
 
   failIfNotApprovedUser(userTriggered, approvedUsers){
     if(!this.isApprovedUser(userTriggered, approvedUsers)) {
-      throw new Error(':wave: Trial Error: Not an approver!')
+      throw new Error(`:wave: Trial Error: ${userTriggered} is not an approver!`)
     }
   }
 
   isApprovedUser(userTriggered, approvedUsers) {
-    console.log(approvedUsers)
+    // console.log(approvedUsers)
     var approvedUsersList = approvedUsers.split(",").map(function(item) {
       return item.trim();
     });
 
     for (const user of approvedUsersList){
-      if (user == userTriggered) {
+      if (user.toLowerCase() == userTriggered.toLowerCase()) {
         //console.log(`${user} : ${userTriggered}`)
         return true
       }
     }
 
-    console.log(`${userTriggered} is not an approved user!`)
+    console.log(`${userTriggered} is not an approved user! Approved Users: ${approvedUsers}`)
     return false
   }
 
