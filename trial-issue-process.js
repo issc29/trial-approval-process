@@ -97,6 +97,7 @@ module.exports = class functions {
       }
     }
 
+    console.log(`${userTriggered} is not an approved user!`)
     return false
   }
 
