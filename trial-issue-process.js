@@ -107,7 +107,7 @@ module.exports = class functions {
 
   getBodyText(companyName, pocLink, githubOrgs, author, approvedUser, repoLink, type, metadataInfo) {
     const typeText = this.getTypeText(type)
-    const orgText = getOrgText(type, githubOrgs)
+    const orgText = this.getOrgText(type, githubOrgs)
     return dedent `
     **Item** | **Description**
     :--: | :--
