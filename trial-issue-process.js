@@ -50,7 +50,7 @@ module.exports = class functions {
       // console.log(createdIssueInfo)
       const opsIssueRepoName = createdIssueInfo.createIssue.issue.repository.nameWithOwner
       const opsIssueNumber = createdIssueInfo.createIssue.issue.number
-      if(opsLabelID) {
+      if(this.opsLabelID) {
         await this.functions.addLabelToIssue(opsIssueNumber, this.opsLabelID)
       }
 
