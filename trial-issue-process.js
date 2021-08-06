@@ -15,6 +15,7 @@ module.exports = class functions {
     this.userTriggered = payload.client_payload.command.user.login
     this.approvedUsers = core.getInput('approvedUsers')
     this.opsRepoID = core.getInput("opsRepoId")
+    this.opsLabelID = core.getInput("opsLabelID")
   }
 
   async runTrialIssueProcess() {
@@ -35,7 +36,7 @@ module.exports = class functions {
 
       const type = this.functions.getType(labels)
       const pocObjectLink = this.functions.getPOCObjectLink(currentIssueBody)
-      const githubOrgs = this.functions.getGitHubOrgs(currentIssueBody)
+      const githubOrgs = (type == 'Cloud') ? this.functions.getGitHubOrgs(currentIssueBody) : ''
       const companyName = this.functions.getCompanyName(currentIssueTitle)
 
       const repoLink = this.getRepoLink(orgname, reponame, issueNumber)
@@ -49,6 +50,9 @@ module.exports = class functions {
       // console.log(createdIssueInfo)
       const opsIssueRepoName = createdIssueInfo.createIssue.issue.repository.nameWithOwner
       const opsIssueNumber = createdIssueInfo.createIssue.issue.number
+      if(opsLabelID) {
+        await this.functions.addLabelToIssue(opsIssueNumber, this.opsLabelID)
+      }
 
       console.log("Commenting on Existing Issue")
       await this.commentOnExistingTrialIssue(this.trialIssueNodeID, this.userTriggered, opsIssueRepoName, opsIssueNumber)
@@ -103,6 +107,7 @@ module.exports = class functions {
 
   getBodyText(companyName, pocLink, githubOrgs, author, approvedUser, repoLink, type, metadataInfo) {
     const typeText = this.getTypeText(type)
+    const orgText = getOrgText(type, githubOrgs)
     return dedent `
     **Item** | **Description**
     :--: | :--
@@ -110,8 +115,7 @@ module.exports = class functions {
     **Base License Type** | ${typeText}
     **:stop_sign: Add-ons?** | <li>- [x] \`Advanced Security\`</li>
     **Admin email** | 
-    **Cloud org name** | ${githubOrgs}
-    **Server Org ID** | 
+    ${orgText}
     **Trial/Extension Length** | 30 days
     **Additional details** | _(i.e. why does your customer need an extension)_
     **POC Issue** | ${repoLink}
@@ -133,6 +137,13 @@ module.exports = class functions {
     }
 
     return '<li>- [x] `GHES: Server` </li><li>- [ ] `GHEC: Cloud` </li><li>- [ ] `GHE: Unified (Server + EntAct)`'
+  }
+
+  getOrgText(type, githubOrgs){
+    if(type == 'Cloud') {
+      return `**Cloud org name** | ${githubOrgs}`
+    }
+    return '**Server ID** | '
   }
 
   getTitleText(companyName) {
