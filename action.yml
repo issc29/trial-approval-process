@@ -12,11 +12,11 @@ inputs:
     description: Does this run in ops repo or trial repo? True | False
     default: false
   pocProjectID:
-    descrption: '[Ops Repo] Trial POC Project ID'
+    description: '[Ops Repo] Trial POC Project ID'
   inProgressColumnID:
     description: '[Ops Repo] Repo ID for Ops repo to open issues on'
   opsLabelID:
-    description: [Trial Repo] ID for label to add to the created Ops Issue
+    description: '[Trial Repo] ID for label to add to the created Ops Issue'
 runs:
   using: 'node12'
   main: 'index.js'
