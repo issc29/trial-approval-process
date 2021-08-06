@@ -51,7 +51,7 @@ module.exports = class functions {
       const opsIssueRepoName = createdIssueInfo.createIssue.issue.repository.nameWithOwner
       const opsIssueNumber = createdIssueInfo.createIssue.issue.number
       if(this.opsLabelID) {
-        await this.functions.addLabelToIssue(opsIssueNumber, this.opsLabelID)
+        await this.functions.addLabelToIssue(createdIssueInfo.createIssue.issue.id, this.opsLabelID)
       }
 
       console.log("Commenting on Existing Issue")
